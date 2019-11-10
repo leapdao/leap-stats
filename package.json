@@ -1,0 +1,31 @@
+{
+  "name": "leap-stats",
+  "version": "1.0.0",
+  "description": "Lambda service to fetch monthly active UTXOs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.568.0",
+    "ethereumjs-util": "^6.2.0",
+    "leap-core": "^0.37.0",
+    "source-map-support": "^0.5.10",
+    "uuid": "^3.3.3",
+    "web3": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.17",
+    "@types/node": "^10.12.18",
+    "fork-ts-checker-webpack-plugin": "^3.0.1",
+    "serverless-dynamodb-local": "^0.2.38",
+    "serverless-offline": "^5.12.0",
+    "serverless-offline-scheduler": "^0.3.8",
+    "serverless-webpack": "^5.2.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.2.4",
+    "webpack": "^4.29.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "author": "Eswara Sai",
+  "license": "MIT"
+}
