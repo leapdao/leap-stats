@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Lambda service to fetch monthly active UTXOs",
   "scripts": {
+    "start": "serverless offline start",
+    "build": "serverless package",
+    "deploy": "serverless deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

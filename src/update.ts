@@ -15,24 +15,27 @@ export const updateStats = async (_event, _context, callback) => {
 
   const uTxos = await web3Plasma.getUnspent();
 
-  const unspents: import('./types').UnspentWithTx[] = await Promise.all(
-    uTxos.map((u: import('./types').UnspentWithTx) =>
-      web3Plasma.eth
-        .getTransaction(bufferToHex(u.outpoint.hash))
-        .then((tx: import('./types').LeapTransaction) => {
-          u.transaction = tx;
-          return u;
-        })
-        .then((uTx: import('./types').UnspentWithTx) =>
-          web3Plasma.eth
-            .getBlock(uTx.transaction.blockNumber)
-            .then((b: import('web3-eth').Block) => {
-              uTx.timestamp = b.timestamp;
-              return uTx;
-            })
-        )
-    )
+  let unspents: import('./types').UnspentWithTx[] = await Promise.all(
+    uTxos.map(async (u: import('./types').UnspentWithTx) => {
+      u.transaction = await web3Plasma.eth.getTransaction(bufferToHex(u.outpoint.hash)) as import('./types').LeapTransaction;
+      return u;
+    })
   );
+
+  const blockNumbers = [...new Set(unspents.map(u => u.transaction.blockNumber))]; // Removes duplicates
+  const blocksWithTimestamps = {};
+
+  await Promise.all(
+    blockNumbers.map(async (bn) => {
+      const block = await web3Plasma.eth.getBlock(bn);
+      blocksWithTimestamps[bn] = block.timestamp;
+    })
+  );
+
+  unspents = unspents.map(u => {
+    u.timestamp = blocksWithTimestamps[u.transaction.blockNumber];
+    return u;
+  });
 
   // Filter current month UTXOs
   const endTimestamp = new Date().getTime() / 1000;
