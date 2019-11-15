@@ -37,13 +37,13 @@ export const updateStats = async (_event, _context, callback) => {
     return u;
   });
 
-  // Filter current month UTXOs
+  // Filter out last 30 days UTXOs
   const endTimestamp = new Date().getTime() / 1000;
-  const startTimestamp = endTimestamp - 30 * 24 * 60 * 60; // 30 days from now
+  const startTimestamp = endTimestamp - 30 * 24 * 60 * 60; // 30 days old
 
   const currentUtxos = unspents.filter(u => u.timestamp >= startTimestamp && u.timestamp <= endTimestamp);
 
-  // Filter same address transactions
+  // Remove same address transactions
   const activeUtxos = currentUtxos.filter(c => c.transaction.from !== c.transaction.to);
 
   const params = {

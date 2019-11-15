@@ -14,7 +14,7 @@ $ cd leap-stats
 $ yarn install
 ```
 
-- Setup [`serverless`](https://serverless.com/framework/docs/getting-started/) local environment
+- Setup [`serverless`](https://serverless.com/framework/docs/getting-started/) local environment: https://serverless.com/framework/docs/getting-started/
 
 - Setup offline DynamoDB
 ```
@@ -27,7 +27,8 @@ $ serverless offline start
 ```
 
 ### Deployment
-- Configure AWS Lambda account using [`aws-cli`](https://serverless.com/framework/docs/providers/aws/guide/credentials#setup-with-the-aws-cli) as per the instructions in the link
+- Configure AWS Lambda account using [`aws-cli`](https://serverless.com/framework/docs/providers/aws/guide/credentials#setup-with-the-aws-cli) as per the instructions in the link:
+https://serverless.com/framework/docs/providers/aws/guide/credentials#setup-with-the-aws-cli
 
 ```
 $ serverless deploy
