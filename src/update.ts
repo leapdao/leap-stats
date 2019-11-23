@@ -8,7 +8,9 @@ import Web3 from 'web3';
 import dynamoDb from './dynamodb'
 
 export const updateStats = async (_event, _context, callback) => {
-  const plasmaProvider = process.env.PLASMA_PROVIDER || 'wss://testnet-node1.leapdao.org:1443';
+  const plasmaProvider = process.env.PLASMA_PROVIDER;
+  console.log('Updating stats... ' + plasmaProvider);
+
   const web3Plasma = helpers.extendWeb3(new Web3(plasmaProvider));
 
   await web3Plasma.eth.net.getId();
@@ -46,6 +48,8 @@ export const updateStats = async (_event, _context, callback) => {
   // Remove same address transactions
   const activeUtxos = currentUtxos.filter(c => c.transaction.from !== c.transaction.to);
 
+  console.log('Active UTXOs metric ' + activeUtxos.length);
+
   const params = {
     TableName: process.env.STATS_TABLE,
     Item: {
@@ -54,6 +58,8 @@ export const updateStats = async (_event, _context, callback) => {
       createdAt: endTimestamp * 1000
     }
   };
+
+  console.log('Saving to DynamoDB...');
 
   dynamoDb.put(params, (error, _result) => {
     if (error) {
@@ -66,6 +72,8 @@ export const updateStats = async (_event, _context, callback) => {
       statusCode: 200,
       body: JSON.stringify({ success: true })
     };
+
+    console.log('Saved to DynamoDB successfully!');
 
     callback(null, response)
   })

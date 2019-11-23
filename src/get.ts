@@ -25,6 +25,9 @@ export const getStats: APIGatewayProxyHandler = (_event, _context, callback) => 
 
     const response = {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin' : '*' // Required for CORS support to work
+      },
       body: JSON.stringify({
         count: result.Items[0] ? result.Items[0].count : 0
       }, null, 2),

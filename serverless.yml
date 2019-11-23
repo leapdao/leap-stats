@@ -53,6 +53,7 @@ functions:
       - http:
           method: get
           path: stats/get
+          cors: true
 
   update:
     handler: src/update.updateStats
