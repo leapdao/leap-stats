@@ -34,6 +34,7 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     STATS_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    PLASMA_PROVIDER: ${env:PLASMA_PROVIDER}
   iamRoleStatements:
     - Effect: Allow
       Action:

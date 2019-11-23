@@ -8,7 +8,7 @@ import Web3 from 'web3';
 import dynamoDb from './dynamodb'
 
 export const updateStats = async (_event, _context, callback) => {
-  const plasmaProvider = 'wss://testnet-node1.leapdao.org:1443';
+  const plasmaProvider = process.env.PLASMA_PROVIDER || 'wss://testnet-node1.leapdao.org:1443';
   const web3Plasma = helpers.extendWeb3(new Web3(plasmaProvider));
 
   await web3Plasma.eth.net.getId();

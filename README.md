@@ -31,5 +31,5 @@ $ serverless offline start
 https://serverless.com/framework/docs/providers/aws/guide/credentials#setup-with-the-aws-cli
 
 ```
-$ serverless deploy
+$ PLASMA_PROVIDER="wss://mainnet-node1.leapdao.org:1443" serverless deploy
 ```
