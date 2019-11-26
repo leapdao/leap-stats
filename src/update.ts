@@ -8,7 +8,7 @@ import Web3 from 'web3';
 import { LeapTransaction, UnspentWithTx } from './types';
 import dynamoDb from './dynamodb'
 
-export const updateStats = async (_event, _context, callback) => {
+export const updateStats = async (_event, _context) => {
   const plasmaProvider = process.env.PLASMA_PROVIDER;
   console.log('Updating stats... ' + plasmaProvider);
 
@@ -66,20 +66,14 @@ export const updateStats = async (_event, _context, callback) => {
 
   console.log('Saving to DynamoDB...');
 
-  dynamoDb.put(params, (error, _result) => {
-    if (error) {
-      console.error(error);
-      callback(new Error('Couldn\'t update the stats in the DynamoDB.'));
-      return
-    }
-
-    const response = {
-      statusCode: 200,
-      body: JSON.stringify({ success: true })
-    };
-
-    console.log('Saved to DynamoDB successfully!');
-
-    callback(null, response)
-  })
+  await new Promise((resolve, reject) =>
+    dynamoDb.put(params, (err, result) => err ? reject(err) : resolve(result))
+  );
+  
+  console.log('Saved to DynamoDB successfully!');
+  
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ success: true })
+  };
 };
