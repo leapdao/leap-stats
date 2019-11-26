@@ -1,0 +1,16 @@
+# package directories
+node_modules
+jspm_packages
+
+# DynamoDB offline
+.dynamodb
+
+# Serverless directories
+.serverless
+
+# Webpack directories
+.webpack
+
+# IDE
+.idea
+.vscode
