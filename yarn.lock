@@ -3284,10 +3284,10 @@ lazystream@^1.0.0:
   dependencies:
     readable-stream "^2.0.5"
 
-leap-core@^0.37.0:
-  version "0.37.0"
-  resolved "https://registry.yarnpkg.com/leap-core/-/leap-core-0.37.0.tgz#1f17957d33bccca130c8e167af2c756a8700d0f6"
-  integrity sha512-9Lj2ibtoDLe9D6++R9CclWMCv/Nf+jiidRRRqgukOOW5b5NdlodSJQMpHa1nw1EL50sl3UImb2GUiYQZJCmFMw==
+leap-core@^0.38.0:
+  version "0.38.0"
+  resolved "https://registry.yarnpkg.com/leap-core/-/leap-core-0.38.0.tgz#808ddff55bb5189771e0fbc2a086210529a17b4f"
+  integrity sha512-mjS3UOiJp05wRKRsURI1u8XzZ/4HmScpj3cpAGRC9ls4QShu/XAf2CpK297PWAfHT+xQTLyd3OxBNujhuTXamA==
   dependencies:
     "@types/web3" "^1.0.18"
     ethereumjs-util "6.0.0"

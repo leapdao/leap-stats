@@ -15,7 +15,7 @@ export const updateStats = async (_event, _context, callback) => {
 
   await web3Plasma.eth.net.getId();
 
-  const uTxos = await web3Plasma.getUnspent();
+  const uTxos = await web3Plasma.getUnspentAll();
 
   let unspents: import('./types').UnspentWithTx[] = await Promise.all(
     uTxos.map(async (u: import('./types').UnspentWithTx) => {
