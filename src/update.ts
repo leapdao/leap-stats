@@ -39,19 +39,16 @@ export const updateStats = async (_event, _context) => {
     )
   );
 
-  unspents = unspents.map(u => {
-    u.timestamp = blocksWithTimestamps[u.transaction.blockNumber];
-    return u;
-  });
-
   // Filter out last 30 days UTXOs
   const endTimestamp = new Date().getTime() / 1000;
   const startTimestamp = endTimestamp - 30 * 24 * 60 * 60; // 30 days old
 
-  const currentUtxos = unspents.filter(u => u.timestamp >= startTimestamp && u.timestamp <= endTimestamp);
-
-  // Remove same address transactions
-  const activeUtxos = currentUtxos.filter(c => c.transaction.from !== c.transaction.to);
+  const activeUtxos = unspents.filter(u => {
+    const timestamp = blocksWithTimestamps[u.transaction.blockNumber];
+    const withinLast30days = timestamp >= startTimestamp && timestamp <= endTimestamp;
+    const notFromSelf = u.transaction.from !== u.transaction.to;
+    return withinLast30days && notFromSelf;
+  });
 
   console.log('Active UTXOs metric ' + activeUtxos.length);
 
