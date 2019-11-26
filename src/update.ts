@@ -5,6 +5,7 @@ import { bufferToHex } from 'ethereumjs-util'
 import { helpers } from 'leap-core';
 import Web3 from 'web3';
 
+import { LeapTransaction, UnspentWithTx } from './types';
 import dynamoDb from './dynamodb'
 
 export const updateStats = async (_event, _context, callback) => {
@@ -17,21 +18,25 @@ export const updateStats = async (_event, _context, callback) => {
 
   const uTxos = await web3Plasma.getUnspentAll();
 
-  let unspents: import('./types').UnspentWithTx[] = await Promise.all(
-    uTxos.map(async (u: import('./types').UnspentWithTx) => {
-      u.transaction = await web3Plasma.eth.getTransaction(bufferToHex(u.outpoint.hash)) as import('./types').LeapTransaction;
-      return u;
-    })
+  let unspents = await Promise.all(
+    uTxos.map((u: UnspentWithTx) =>
+      web3Plasma.eth.getTransaction(bufferToHex(u.outpoint.hash))
+        .then((tx: LeapTransaction) => {
+          u.transaction = tx;
+          return u;
+        })
+    )
   );
 
   const blockNumbers = [...new Set(unspents.map(u => u.transaction.blockNumber))]; // Removes duplicates
   const blocksWithTimestamps = {};
 
   await Promise.all(
-    blockNumbers.map(async (bn) => {
-      const block = await web3Plasma.eth.getBlock(bn);
-      blocksWithTimestamps[bn] = block.timestamp;
-    })
+    blockNumbers.map(bn =>
+      web3Plasma.eth.getBlock(bn).then(block =>
+        blocksWithTimestamps[bn] = block.timestamp
+      )
+    )
   );
 
   unspents = unspents.map(u => {
