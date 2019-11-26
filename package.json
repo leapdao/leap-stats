@@ -6,6 +6,7 @@
     "start": "serverless offline start",
     "build": "serverless package",
     "deploy": "serverless deploy",
+    "deploy:mainnet": "PLASMA_PROVIDER=wss://mainnet-node1.leapdao.org:1443 serverless deploy -s mainnet",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

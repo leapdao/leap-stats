@@ -30,6 +30,12 @@ $ serverless offline start
 - Configure AWS Lambda account using [`aws-cli`](https://serverless.com/framework/docs/providers/aws/guide/credentials#setup-with-the-aws-cli) as per the instructions in the link:
 https://serverless.com/framework/docs/providers/aws/guide/credentials#setup-with-the-aws-cli
 
+Deploy for mainnet:
+```
+yarn deploy:mainnet
+```
+
+or custom deployment, you can specify the provider and stage:
 ```
 $ PLASMA_PROVIDER="wss://mainnet-node1.leapdao.org:1443" serverless deploy
 ```
